@@ -14,7 +14,7 @@ type Action =
   | { type: 'ADD_CRITERION'; value: Criterion }
   | { type: 'CHANGE_CRITERION'; name:string, value:string, key:"hint"|"scale"|"name" }
   | { type: 'REMOVE_CRITERION'; idx: number }
-  | { type: 'SET_TOOL_SETTINGS'; field: keyof FormValues; value: string }
+  | { type: 'SET_TOOL_SETTINGS'; field: keyof FormValues["toolSettings"]; value: string | number | boolean }
   | { type: 'SET_FIELD'; field: keyof FormValues; value: string }
   | { type: 'VALIDATE' }
   | { type: 'LOAD_PRESETS'; payload: Preset[] }
@@ -96,7 +96,7 @@ function reducer(state: State, action: Action): State {
       const result = formSchema.safeParse(state.formValues)
       if (!result.success) {
         const newErrors: Errors = {}
-        result.error.errors.forEach(err => {
+        result.error.issues.forEach(err => {
           const field = err.path[0] as keyof FormValues
           newErrors[field] = err.message
         })

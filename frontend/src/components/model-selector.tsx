@@ -1,10 +1,10 @@
-import { Check, ChevronsUpDown } from "lucide-react"
-import * as React from "react"
+import { Check, ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 
-import type { Model, ModelType } from "@/data/models"
-import type { Dispatch, State } from "@/hooks/playgroundReducer"
-import { cn } from "@/lib/utils"
-import { Button } from "./ui/button"
+import type { Model, ModelType } from "@/data/models";
+import type { Dispatch, State } from "@/hooks/playgroundReducer";
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,31 +12,30 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "./ui/hover-card"
-import { Label } from "./ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./ui/popover"
-
+} from "./ui/command";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { Label } from "./ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface ModelSelectorProps {
-  types: readonly ModelType[]
-  models: Model[]
-  state:State
-  dispatch: Dispatch
+  types: readonly ModelType[];
+  models: Model[];
+  state: State;
+  dispatch: Dispatch;
 }
 
-export function ModelSelector({ models, types,state,dispatch, ...props }: ModelSelectorProps) {
-  const [open, setOpen] = React.useState(false)
-  const selectedModel = models.find(({id})=>id==state.formValues.toolSettings.model)
-  const [peekedModel, setPeekedModel] = React.useState<Model>(models[0])
+export function ModelSelector({
+  models,
+  types,
+  state,
+  dispatch,
+  ...props
+}: ModelSelectorProps) {
+  const [open, setOpen] = React.useState(false);
+  const selectedModel = models.find(
+    ({ id }) => id == state.formValues.toolSettings.model
+  );
+  const [peekedModel, setPeekedModel] = React.useState<Model>(models[0]);
 
   return (
     <div className="grid gap-2">
@@ -107,8 +106,12 @@ export function ModelSelector({ models, types,state,dispatch, ...props }: ModelS
                           isSelected={selectedModel?.id === model.id}
                           onPeek={(model) => setPeekedModel(model)}
                           onSelect={() => {
-                            dispatch({type:"SET_TOOL_SETTINGS",field:"model", value:model.id})
-                            setOpen(false)
+                            dispatch({
+                              type: "SET_TOOL_SETTINGS",
+                              field: "model",
+                              value: model.id,
+                            });
+                            setOpen(false);
                           }}
                         />
                       ))}
@@ -120,30 +123,18 @@ export function ModelSelector({ models, types,state,dispatch, ...props }: ModelS
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }
 
 interface ModelItemProps {
-  model: Model
-  isSelected: boolean
-  onSelect: () => void
-  onPeek: (model: Model) => void
+  model: Model;
+  isSelected: boolean;
+  onSelect: () => void;
+  onPeek: (model: Model) => void;
 }
 
-function ModelItem({ model, isSelected, onSelect, onPeek }: ModelItemProps) {
-  const ref = React.useRef<HTMLDivElement>(null)
-
-  // useMutationObserver(ref, (mutations) => {
-  //   mutations.forEach((mutation) => {
-  //     if (
-  //       mutation.type === "attributes" &&
-  //       mutation.attributeName === "aria-selected" &&
-  //       ref.current?.getAttribute("aria-selected") === "true"
-  //     ) {
-  //       onPeek(model)
-  //     }
-  //   })
-  // })
+function ModelItem({ model, isSelected, onSelect }: ModelItemProps) {
+  const ref = React.useRef<HTMLDivElement>(null);
 
   return (
     <CommandItem
@@ -157,5 +148,5 @@ function ModelItem({ model, isSelected, onSelect, onPeek }: ModelItemProps) {
         className={cn("ml-auto", isSelected ? "opacity-100" : "opacity-0")}
       />
     </CommandItem>
-  )
+  );
 }

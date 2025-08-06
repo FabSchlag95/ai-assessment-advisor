@@ -1,12 +1,15 @@
 {
-  "name": "ai-advisor-tool",
+  "name": "ai-assessment-advisor",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "setup": "npm ci && cd backend && venv\\Scripts\\pip install --no-cache-dir -r requirements.txt && cd ../frontend && npm ci",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
     "frontend": "cd frontend && npm run dev",
-    "backend": "cd backend && venv\\Scripts\\python.exe -m uvicorn main:app --reload --port 8000"
+    "backend": "cd backend && venv\\Scripts\\python.exe -m uvicorn main:app --reload --port 8000",
+    "build":"cd frontend && npm run build",
+    "docker":"docker compose up --build"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

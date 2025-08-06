@@ -1,8 +1,8 @@
 
-from typing import Callable, Tuple
+from typing import Any, Callable, Tuple
 
 
-def format_segmentation(segments_per_field: dict[str, list[str]], segment_prefix: str = "<segment {index}>\n", segment_postfix: str = "\n") -> dict[str, str]:
+def format_segmentation(segments_per_field: dict[str, list[str]], segment_prefix: str = "<<{index}>>", segment_postfix: str = " ") -> dict[str, str]:
     """
     @params: 
         segments_per_field: dict[list[str]] = dict of fields with segments 
@@ -23,7 +23,7 @@ def format_segmentation(segments_per_field: dict[str, list[str]], segment_prefix
     return segmented_texts_per_field
 
 
-def segment_and_format(texts_per_field: dict[str, str], segmentation_function: Callable[[dict[str, str]], dict[str, list[str]]], segment_prefix: str = "<segment {index}>\n", segment_postfix: str = "\n", field_title_prefix: str = "##", field_postfix: str = "\n\n", **segmentation_props) -> tuple[str, dict[str, list[str]]]:
+def segment_and_format(texts_per_field: dict[str, Any], segmentation_function: Callable[[dict[str, str]], dict[str, list[str]]],  segment_prefix: str = "<<{index}>>", segment_postfix: str = " ", field_title_prefix: str = "##", field_postfix: str = "\n\n", **segmentation_props) -> tuple[str, dict[str, list[str]]]:
     """
     @params: 
         texts_per_field: dict[str] = dict of input texts
@@ -35,6 +35,8 @@ def segment_and_format(texts_per_field: dict[str, str], segmentation_function: C
         **segmentation_props = max_length, min_length, etc.
     """
     formatted_idea = ""
+    texts_per_field = {key: "- "+"\n- ".join(val) if isinstance(
+        val, list) else str(val) for key, val in texts_per_field.items()}
     segments_per_field = segmentation_function(
         texts_per_field, **segmentation_props)
     texts_per_field = format_segmentation(

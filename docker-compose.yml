@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ai-assessment-backend:latest
+    ports:
+      - "8000:8000"
+    # Mount the local .env as a runtime-only secret
+    volumes:
+      - ./backend/.env:/run/secrets/app_env:ro
+    environment:
+      PYTHONUNBUFFERED: "1"
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: ai-assessment-frontend:latest
+    ports:
+      - "5173:5173"
+    environment:
+      # Example: adjust if your frontend reads this var
+      - VITE_API_BASE=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge

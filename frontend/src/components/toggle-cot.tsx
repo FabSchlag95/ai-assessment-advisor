@@ -1,7 +1,4 @@
-"use client"
-
-import * as React from "react"
-
+import type { Dispatch, State } from "@/hooks/playgroundReducer"
 import {
   HoverCard,
   HoverCardContent,
@@ -11,8 +8,7 @@ import { Label } from "./ui/label"
 import { Switch } from "./ui/switch"
 
 
-export function ToggleCoT({state, dispatch}) {
-  console.log(state)
+export function ToggleCoT({state, dispatch}:{state:State, dispatch:Dispatch}) {
   return (
     <div className="grid gap-2 pt-2">
       <HoverCard openDelay={200}>

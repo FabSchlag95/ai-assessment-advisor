@@ -1,9 +1,9 @@
-import * as React from "react"
-import { type PopoverProps } from "@radix-ui/react-popover"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { type PopoverProps } from "@radix-ui/react-popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "./ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
 import {
   Command,
   CommandEmpty,
@@ -11,27 +11,26 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./ui/popover"
-
-
+} from "./ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import type { Preset } from "@/data/presets";
 
 interface PresetSelectorProps extends PopoverProps {
-  presets: Preset[]
-  setForm:(id:string) => void
+  presets: Preset[];
+  setForm: (id: string) => void;
 }
 
-export function PresetSelector({setForm,presets, ...props }: PresetSelectorProps) {
-  const [open, setOpen] = React.useState(false)
-  const [selectedPreset, setSelectedPreset] = React.useState<Preset>()
+export function PresetSelector({
+  setForm,
+  presets,
+  ...props
+}: PresetSelectorProps) {
+  const [open, setOpen] = React.useState(false);
+  const [selectedPreset, setSelectedPreset] = React.useState<Preset>();
 
-  React.useEffect(()=>{
-    if (selectedPreset)setForm(selectedPreset.id)
-  },[selectedPreset])
+  React.useEffect(() => {
+    if (selectedPreset) setForm(selectedPreset.id);
+  }, [selectedPreset]);
 
   return (
     <Popover open={open} onOpenChange={setOpen} {...props}>
@@ -57,8 +56,8 @@ export function PresetSelector({setForm,presets, ...props }: PresetSelectorProps
                 <CommandItem
                   key={preset.id}
                   onSelect={() => {
-                    setSelectedPreset(preset)
-                    setOpen(false)
+                    setSelectedPreset(preset);
+                    setOpen(false);
                   }}
                 >
                   {preset.name}
@@ -73,14 +72,9 @@ export function PresetSelector({setForm,presets, ...props }: PresetSelectorProps
                 </CommandItem>
               ))}
             </CommandGroup>
-            <CommandGroup className="pt-0">
-              <CommandItem onSelect={() => null}>
-                More examples
-              </CommandItem>
-            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
