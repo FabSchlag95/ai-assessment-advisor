@@ -48,8 +48,7 @@ export function ModelSelector({
           className="w-[260px] text-sm"
           side="left"
         >
-          The model which will generate the completion. Some models are suitable
-          for natural language tasks, others specialize in code. Learn more.
+          The model which will generate the completion.
         </HoverCardContent>
       </HoverCard>
       <Popover open={open} onOpenChange={setOpen} {...props}>

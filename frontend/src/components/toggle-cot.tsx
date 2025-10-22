@@ -31,9 +31,7 @@ export function ToggleCoT({state, dispatch}:{state:State, dispatch:Dispatch}) {
           className="w-[260px] text-sm"
           side="left"
         >
-          Controls randomness: lowering results in less random completions. As
-          the temperature approaches zero, the model will become deterministic
-          and repetitive.
+          Toggle Chain-of-Thought: Easy prompt-based reasoning that may elicit deeper understanding of the task.
         </HoverCardContent>
       </HoverCard>
     </div>
